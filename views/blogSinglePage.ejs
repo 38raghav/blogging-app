@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('./partials/head.ejs') %>
+        <title>Home Page</title>
+</head>
+
+<body>
+    <%- include("./partials/nav.ejs") %>
+        <%- include("./partials/flash.ejs") %>
+            <h1 class="text-center mt-2">
+                <%= blog.title %>
+            </h1>
+            <div class="card border-0 h-20 container">
+                <img src="<%= blog.image.url %>" class="card-img-top w-50 mx-auto" alt="Blog Image">
+                <div class="card-body">
+                    <p class="text-muted">Created by: <strong>@<%= blog.owner.username %></strong></p>
+                    <!-- <h5 class="card-title">
+                        <%= blog.title %>
+                    </h5> -->
+                    <p class="card-text">
+                        <%= blog.description %>
+                    </p>
+
+
+                    <% if(user && blog.owner._id.equals(user.id)){ %>
+                        <form method="POST" action="/blog/<%=blog._id %>?_method=DELETE">
+                            <button type="submit" class="btn btn-dark">Delete</button>
+                        </form>
+                        <a href="/blog/<%= blog._id %>/edit" class="btn btn-dark mt-1">Edit Post</a>
+                        <% } %>
+                </div>
+            </div>
+            <% if(user) {%>
+            <div class="container">
+                <hr>
+                <h4 class="card-title mb-3 mt-3">Leave Comments Here</h4>
+                <form action="/blog/<%=blog._id %>/reviews" method="POST">
+                    <div class="form-floating mb-3">
+                        <textarea class="form-control" name="content" 
+                            style="height: 100px" required></textarea>
+                        <label for="textArea">
+                            Share your thoughts...
+                        </label>
+                    </div>
+                    <button class="btn btn-dark">Submit Comment</button>
+                </form>
+            </div>
+            
+            <div class=" container mt-4 mb-4">
+                <h5>Comments</h5>
+                <% if(reviews && reviews.length){ %>
+                    <div class="row">
+                        <% reviews.forEach((e)=>{ %>
+                            <div class="col-12 col-md-6 mb-2">
+                                <div class="card mt-2 p-2">
+                                    <%= e.content %>
+                                        <b><small>By: <%= e.author.username %></small></b>
+                                        <% if(user && e.author._id.equals(user.id)){ %>
+                                        <form action="/blog/<%= e.blog%>/reviews/<%= e._id %>?_method=DELETE"
+                                            method="post">
+                                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                        </form>
+                                        <% } %>
+                                </div>
+                            </div>
+                            <% }) %>
+                    </div>
+                    <% } else { %>
+                        <p>No comments yet</p>
+                        <% } %>
+            </div>
+            <% } %>
+
+
+            <%- include('./partials/footer.ejs') %>
+</body>
+
+</html>
