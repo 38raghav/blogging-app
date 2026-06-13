@@ -13,7 +13,9 @@ const methodOverride = require('method-override');
 
 
 
-connectDB();
+connectDB().catch(err => {
+  console.error("DB Connection Failed:", err);
+});
 
 // Basic EJS Configuration
 app.set('view engine','ejs');  // let Express know you are using EJS files
@@ -63,9 +65,9 @@ app.use((err,req,res,next)=>{
 })
 
 
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 3000;
 
-app.listen(PORT, () => {
+app.listen(PORT,"0.0.0.0", () => {
   console.log(`Server running on ${PORT}`);
 });
 
