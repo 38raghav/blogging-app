@@ -53,6 +53,9 @@ app.use((req,res,next)=>{
 })
 
 
+app.get("/",(req,res)=>{
+  res.redirect("/blog");
+})
 
 app.use("/user",userRoute);
 app.use("/blog",blogRoute);
