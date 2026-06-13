@@ -1,6 +1,6 @@
 {
   "engines": {
-    "node" : "22.18.0"
+    "node": "22.18.0"
   },
   "name": "bloggingapp2",
   "version": "1.0.0",
@@ -14,7 +14,7 @@
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^6.0.0",
-    "cloudinary": "^2.10.0",
+    "cloudinary": "^1.41.3",
     "connect-flash": "^0.1.1",
     "cookie-parser": "^1.4.7",
     "dotenv": "^17.4.2",
